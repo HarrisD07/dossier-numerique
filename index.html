@@ -3,15 +3,948 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dossier numérique - Suivi</title>
+    <title>Portfolio Étudiant - Dossier Numérique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 120px 2rem 80px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        /* Documents Section */
+        .documents-upload {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f0f7ff;
+        }
+
+        .upload-area:hover {
+            background: #e0f0ff;
+            border-color: var(--secondary);
+        }
+
+        .upload-area.dragover {
+            background: #d0e7ff;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .document-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .document-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+
+        .document-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            transform: translateX(5px);
+        }
+
+        .document-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .document-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .document-details h4 {
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .document-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .action-btn.view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-tab {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .category-tab.active {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        .category-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+    </style>
 </head>
 <body>
-    <h1>Mon dossier numérique</h1>
-    <p>Bienvenue sur mon espace de suivi.</p>
-    <ul>
-        <li><a href="suivi.html">Suivi du projet</a></li>
-        <li><a href="ressources.html">Ressources</a></li>
-        <li><a href="contact.html">Contact</a></li>
-    </ul>
-</body>
-</html>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">Portfolio</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#documents">Documents</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="accueil">
+        <h1>Votre Nom</h1>
+        <p>Étudiant en Informatique | Développeur Passionné</p>
+        <div class="hero-buttons">
+            <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+            <a href="#contact" class="btn btn-secondary">Me contacter</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="section" id="projets">
+            <h2 class="section-title">Mes Projets</h2>
+            <p class="section-subtitle">Une sélection de mes réalisations académiques et personnelles</p>
+            
+            <div class="cards-grid">
+                <div class="card" onclick="openProjectModal('projet1')">
+                    <div class="card-icon">💻</div>
+                    <h3>Application Web</h3>
+                    <p>Développement d'une application web complète avec React et Node.js pour la gestion de tâches collaboratives.</p>
+                </div>
+                <div class="card" onclick="openProjectModal('projet2')">
+                    <div class="card-icon">📱</div>
+                    <h3>Application Mobile</h3>
+                    <p>Création d'une application mobile native pour Android permettant le suivi des habitudes quotidiennes.</p>
+                </div>
+                <div class="card" onclick="openProjectModal('projet3')">
+                    <div class="card-icon">🤖</div>
+                    <h3>Intelligence Artificielle</h3>
+                    <p>Implémentation d'un système de reconnaissance d'images utilisant les réseaux de neurones convolutifs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="competences">
+            <h2 class="section-title">Compétences</h2>
+            <p class="section-subtitle">Technologies et outils que je maîtrise</p>
+            
+            <div class="skills-container">
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>HTML/CSS</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>JavaScript</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Python</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>React</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Node.js</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="70"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>SQL</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="documents">
+            <h2 class="section-title">Documents Académiques</h2>
+            <p class="section-subtitle">Espace de partage de documents avec mes enseignants</p>
+
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="filterDocuments('all')">Tous</button>
+                <button class="category-tab" onclick="filterDocuments('rapports')">Rapports</button>
+                <button class="category-tab" onclick="filterDocuments('projets')">Projets</button>
+                <button class="category-tab" onclick="filterDocuments('presentations')">Présentations</button>
+                <button class="category-tab" onclick="filterDocuments('autres')">Autres</button>
+            </div>
+            
+            <div class="documents-upload">
+                <h3 style="margin-bottom: 1.5rem;">Ajouter un document</h3>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <h3>Glissez-déposez vos fichiers ici</h3>
+                    <p>ou cliquez pour sélectionner</p>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                </div>
+                
+                <div style="margin-top: 1.5rem;">
+                    <label for="docCategory">Catégorie:</label>
+                    <select id="docCategory" style="width: 100%; padding: 0.7rem; margin-top: 0.5rem; border: 2px solid #e2e8f0; border-radius: 8px;">
+                        <option value="rapports">Rapports</option>
+                        <option value="projets">Projets</option>
+                        <option value="presentations">Présentations</option>
+                        <option value="autres">Autres</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="document-list" id="documentList">
+                <!-- Les documents seront ajoutés dynamiquement ici -->
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <h2 class="section-title">Contact</h2>
+            <p class="section-subtitle">N'hésitez pas à me contacter</p>
+            
+            <form class="contact-form" onsubmit="handleContact(event)">
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Sujet</label>
+                    <input type="text" id="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Portfolio Étudiant. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Modal pour les projets -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let documents = [];
+        let currentFilter = 'all';
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation des barres de compétences
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        bar.style.width = width + '%';
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const skillsSection = document.querySelector('.skills-container');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+
+        // Gestion de l'upload de fichiers
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            const category = document.getElementById('docCategory').value;
+            Array.from(files).forEach(file => {
+                const doc = {
+                    id: Date.now() + Math.random(),
+                    name: file.name,
+                    size: formatFileSize(file.size),
+                    date: new Date().toLocaleDateString('fr-FR'),
+                    category: category,
+                    status: 'pending',
+                    file: file
+                };
+                documents.push(doc);
+            });
+            displayDocuments();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const icons = {
+                'pdf': '📄',
+                'doc': '📝',
+                'docx': '📝',
+                'ppt': '📊',
+                'pptx': '📊',
+                'xls': '📈',
+                'xlsx': '📈',
+                'zip': '🗜️',
+                'rar': '🗜️',
+                'jpg': '🖼️',
+                'jpeg': '🖼️',
+                'png': '🖼️',
+                'gif': '🖼️'
+            };
+            return icons[ext] || '📎';
+        }
+
+        function filterDocuments(category) {
+            currentFilter = category;
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            displayDocuments();
+        }
+
+        function displayDocuments() {
+            const documentList = document.getElementById('documentList');
+            const filteredDocs = currentFilter === 'all' 
+                ? documents 
+                : documents.filter(doc => doc.category === currentFilter);
+
+            if (filteredDocs.length === 0) {
+                documentList.innerHTML = '<p style="text-align: center; color: var(--gray); padding: 2rem;">Aucun document pour le moment</p>';
+                return;
+            }
+
+            documentList.innerHTML = filteredDocs.map(doc => `
+                <div class="document-item">
+                    <div class="document-info">
+                        <div class="document-icon">${getFileIcon(doc.name)}</div>
+                        <div class="document-details">
+                            <h4>${doc.name} <span class="status-badge ${doc.status}">${doc.status === 'pending' ? 'En attente' : 'Validé'}</span></h4>
+                            <p>${doc.size} • ${doc.date} • ${doc.category}</p>
+                        </div>
+                    </div>
+                    <div class="document-actions">
+                        <button class="action-btn view" onclick="viewDocument(${doc.id})">Voir</button>
+                        <button class="action-btn delete" onclick="deleteDocument(${doc.id})">Supprimer</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function viewDocument(id) {
+            const doc = documents.find(d => d.id === id);
+            if (doc) {
+                alert(`Ouverture de: ${doc.name}\n\nDans une application réelle, ceci ouvrirait le document dans un visualiseur.`);
+            }
+        }
+
+        function deleteDocument(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) {
+                documents = documents.filter(d => d.id !== id);
+                displayDocuments();
+            }
+        }
+
+        function openProjectModal(projectId) {
+            const projects = {
+                'projet1': {
+                    title: 'Application Web de Gestion',
+                    description: 'Application web complète développée avec React et Node.
