@@ -1,1 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Projets - Harris Kosoko</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- NE PAS charger style.css ici pour éviter les conflits -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link, .admin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-link {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+        }
+
+        .back-link:hover {
+            background: rgba(6, 182, 212, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .admin-link {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+
+        .admin-link:hover {
+            background: rgba(245, 158, 11, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .projects-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        /* Timeline Container */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Project Timeline Item */
+        .project-timeline-item {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .project-timeline-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Project Header */
+        .project-header {
+            padding: 2rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .project-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            flex: 1;
+        }
+
+        .project-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #06b6d4;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+
+        .project-description {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .project-technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Project Content */
+        .project-content {
+            padding: 2rem;
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: #06b6d4;
+        }
+
+        .project-details {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.8;
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Images Section */
+        .images-section {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .main-image-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #0f172a;
+        }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .main-image-container:hover .main-image {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .main-image-container:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .view-image-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: #0f172a;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-image-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gallery thumbnails */
+        .gallery-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .thumbnail {
+            aspect-ratio: 16/9;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .thumbnail:hover {
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Files Section */
+        .files-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+            transform: translateX(5px);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            color: #f1f5f9;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-type {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .file-action {
+            color: #06b6d4;
+            font-size: 1.25rem;
+        }
+
+        /* Links Section */
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .project-link-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .project-link-btn i {
+            font-size: 1.25rem;
+        }
+
+        /* Image Viewer Modal */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .image-viewer.active {
+            display: flex;
+        }
+
+        .viewer-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .viewer-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .viewer-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: rgba(239, 68, 68, 0.9);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .viewer-close:hover {
+            background: #dc2626;
+            transform: rotate(90deg);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            color: #334155;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+        }
+
+        .empty-text {
+            color: #475569;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 5rem 2rem;
+            color: #64748b;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .timeline-container {
+                padding: 1rem;
+            }
+
+            .project-header {
+                padding: 1.5rem;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .project-title-row {
+                flex-direction: column;
+                align-items: start;
+            }
+
+            .gallery-thumbnails {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Retour à l'accueil
+            </a>
+            <a href="admin.html" class="admin-link">
+                <i class="fas fa-lock"></i>
+                Administration
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Mes Projets & Réalisations</h1>
+        <p class="hero-subtitle">
+            Découvrez en détail mes expériences professionnelles et projets académiques
+        </p>
+        <div class="projects-count">
+            <i class="fas fa-folder"></i>
+            <span id="projectCount">0</span> projet(s)
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <div class="timeline-container">
+        <div id="projectsTimeline">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Chargement des projets...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Viewer -->
+    <div class="image-viewer" id="imageViewer">
+        <div class="viewer-content">
+            <button class="viewer-close" onclick="closeViewer()">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="viewerImage" class="viewer-image" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        let allProjects = [];
+
+        // Charger les projets
+        async function loadProjects() {
+            try {
+                // PRIORITÉ 1: LocalStorage (données de l'admin)
+                const savedProjects = localStorage.getItem('portfolioProjects');
+                
+                if (savedProjects && savedProjects !== '[]') {
+                    allProjects = JSON.parse(savedProjects);
+                    console.log('✅ Chargé depuis localStorage:', allProjects.length, 'projets');
+                } else {
+                    // PRIORITÉ 2: Fichier JSON
+                    const response = await fetch('projects.json');
+                    allProjects = await response.json();
+                    console.log('✅ Chargé depuis projects.json:', allProjects.length, 'projets');
+                }
+
+                displayProjects();
+            } catch (error) {
+                console.error('❌ Erreur chargement:', error);
+                showEmptyState();
+            }
+        }
+
+        // Afficher les projets
+        function displayProjects() {
+            const container = document.getElementById('projectsTimeline');
+            document.getElementById('projectCount').textContent = allProjects.length;
+
+            if (allProjects.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            container.innerHTML = allProjects.map(project => {
+                const hasDetails = project.details && project.details.trim();
+                const hasImages = project.images && project.images.length > 0;
+                const hasFiles = project.files && project.files.length > 0;
+                const hasLinks = project.github || project.demo;
+
+                return `
+                    <div class="project-timeline-item">
+                        <!-- Header -->
+                        <div class="project-header">
+                            <div class="project-title-row">
+                                <h2 class="project-title">${project.title}</h2>
+                                <div class="project-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    ${project.date}
+                                </div>
+                            </div>
+                            <p class="project-description">${project.description}</p>
+                            <div class="project-technologies">
+                                ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="project-content">
+                            ${hasDetails ? `
+                                <div class="content-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-info-circle"></i>
+                                        Détails du projet
+                                    </h3>
+                                    <div class="project-details">${project.details}</div>
+                                </div>
+                            ` : ''}
+
+                            ${hasImages ? `
+                                <div class="content-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-images"></i>
+                                        Images du projet
+                                    </h3>
+                                    <div class="images-section">
+                                        <div class="main-image-container" onclick="openViewer('${project.images[0].replace(/'/g, "\\'")}')">
+                                            <img src="${project.images[0]}" alt="${project.title}" class="main-image" 
+                                                 onerror="this.src='https://via.placeholder.com/800x400/1e3a8a/ffffff?text=Image'">
+                                            <div class="image-overlay">
+                                                <button class="view-image-btn">
+                                                    <i class="fas fa-search-plus"></i>
+                                                    Voir en grand
+                                                </button>
+                                            </div>
+                                        </div>
+                                        ${project.images.length > 1 ? `
+                                            <div class="gallery-thumbnails">
+                                                ${project.images.slice(1).map(img => `
+                                                    <div class="thumbnail" onclick="openViewer('${img.replace(/'/g, "\\'")}')">
+                                                        <img src="${img}" alt="Miniature" 
+                                                             onerror="this.src='https://via.placeholder.com/200x150/1e3a8a/ffffff?text=Image'">
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${hasFiles ? `
+                                <div class="content-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-file-alt"></i>
+                                        Fichiers associés
+                                    </h3>
+                                    <div class="files-list">
+                                        ${project.files.map(file => `
+                                            <div class="file-item" onclick="downloadFile('${file.data}', '${file.name}')">
+                                                <div class="file-icon">
+                                                    <i class="fas fa-file-${getFileIcon(file.type || file.name)}"></i>
+                                                </div>
+                                                <div class="file-info">
+                                                    <div class="file-name">${file.name}</div>
+                                                    <div class="file-type">${getFileType(file.type || file.name)}</div>
+                                                </div>
+                                                <div class="file-action">
+                                                    <i class="fas fa-download"></i>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${hasLinks ? `
+                                <div class="content-section">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-link"></i>
+                                        Liens externes
+                                    </h3>
+                                    <div class="project-links">
+                                        ${project.github ? `
+                                            <a href="${project.github}" target="_blank" class="project-link-btn">
+                                                <i class="fab fa-github"></i>
+                                                Voir sur GitHub
+                                            </a>
+                                        ` : ''}
+                                        ${project.demo ? `
+                                            <a href="${project.demo}" target="_blank" class="project-link-btn">
+                                                <i class="fas fa-external-link-alt"></i>
+                                                Voir la démo
+                                            </a>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Afficher l'état vide
+        function showEmptyState() {
+            const container = document.getElementById('projectsTimeline');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="empty-title">Aucun projet disponible</h3>
+                    <p class="empty-text">Ajoutez vos premiers projets depuis l'administration</p>
+                    <a href="admin.html" class="admin-link">
+                        <i class="fas fa-plus-circle"></i>
+                        Ajouter un projet
+                    </a>
+                </div>
+            `;
+        }
+
+        // Ouvrir le viewer d'image
+        function openViewer(imageSrc) {
+            document.getElementById('viewerImage').src = imageSrc;
+            document.getElementById('imageViewer').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fermer le viewer
+        function closeViewer() {
+            document.getElementById('imageViewer').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Télécharger un fichier
+        function downloadFile(dataUrl, fileName) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Obtenir l'icône du fichier
+        function getFileIcon(typeOrName) {
+            const str = typeOrName.toLowerCase();
+            if (str.includes('pdf')) return 'pdf';
+            if (str.includes('word') || str.includes('doc')) return 'word';
+            if (str.includes('excel') || str.includes('xls')) return 'excel';
+            if (str.includes('zip') || str.includes('rar')) return 'archive';
+            if (str.includes('image') || str.includes('jpg') || str.includes('png')) return 'image';
+            return 'alt';
+        }
+
+        // Obtenir le type de fichier
+        function getFileType(typeOrName) {
+            const str = typeOrName.toLowerCase();
+            if (str.includes('pdf')) return 'Document PDF';
+            if (str.includes('word') || str.includes('doc')) return 'Document Word';
+            if (str.includes('excel') || str.includes('xls')) return 'Fichier Excel';
+            if (str.includes('zip')) return 'Archive ZIP';
+            if (str.includes('image')) return 'Image';
+            return 'Fichier';
+        }
+
+        // Fermer le viewer avec Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeViewer();
+        });
+
+        // Fermer en cliquant sur le fond
+        document.getElementById('imageViewer').addEventListener('click', (e) => {
+            if (e.target.id === 'imageViewer') closeViewer();
+        });
+
+        // Charger au démarrage
+        loadProjects();
+
+        // Synchronisation automatique toutes les 3 secondes
+        setInterval(() => {
+            const savedProjects = localStorage.getItem('portfolioProjects');
+            if (savedProjects) {
+                const newProjects = JSON.parse(savedProjects);
+                if (JSON.stringify(newProjects) !== JSON.stringify(allProjects)) {
+                    console.log('🔄 Nouveaux projets détectés, actualisation...');
+                    allProjects = newProjects;
+                    displayProjects();
+                }
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
